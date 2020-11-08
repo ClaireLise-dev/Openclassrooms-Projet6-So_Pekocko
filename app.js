@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require ('helmet')
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const sauceRoutes = require('./routes/sauce');
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
+app.use(helmet())
 
 //Routeurs
 app.use('/images', express.static(path.join(__dirname, 'images')));
