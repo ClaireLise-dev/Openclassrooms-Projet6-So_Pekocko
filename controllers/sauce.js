@@ -1,6 +1,7 @@
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
 
+//Récupération de toutes les sauces dans la base de données (GET)
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
     .then(sauces => res.status(200).json(sauces))
@@ -9,7 +10,7 @@ exports.getAllSauces = (req, res, next) => {
     }));
 };
 
-
+//Récupération d'un seule sauce grâce à son id (GET)
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({
       _id: req.params.id
@@ -20,6 +21,7 @@ exports.getOneSauce = (req, res, next) => {
     }));
 };
 
+//Création d'une sauce (POST)
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
@@ -38,6 +40,7 @@ exports.createSauce = (req, res, next) => {
     }));
 }
 
+//Modification d'une sauce (PUT)
 exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file ? {
     ...JSON.parse(req.body.sauce),
@@ -59,6 +62,7 @@ exports.modifySauce = (req, res, next) => {
     }));
 };
 
+//Suppression d'une sauce (DELETE)
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({
       _id: req.params.id
@@ -82,6 +86,7 @@ exports.deleteSauce = (req, res, next) => {
     }));
 };
 
+//Création like/dislike (POST)
 exports.likeSauce = (req, res, next) => {
   const userId = req.body.userId;
   const like = req.body.like;
@@ -90,31 +95,40 @@ exports.likeSauce = (req, res, next) => {
       _id: sauceId
     })
     .then(sauce => {
+      //Nouvelles valeurs à modifier
       const newValues = {
         usersLiked: sauce.usersLiked,
         usersDisliked: sauce.usersDisliked,
         likes: 0,
         dislikes: 0
       }
+      //Plusieurs cas
       switch (like) {
+        //Sauce like
         case 1: 
           newValues.usersLiked.push(userId);
           break;
+        //Sauce dislike
         case -1: 
           newValues.usersDisliked.push(userId);
           break;
+        //Annulation like/dislike
         case 0:
           if (newValues.usersLiked.includes(userId)) {
+            //Si on annule le like
             const index = newValues.usersLiked.indexOf(userId);
             newValues.usersLiked.splice(index, 1);
           } else {
+            //Si on annule le dislike
             const index = newValues.usersDisliked.indexOf(userId);
             newValues.usersDisliked.splice(index, 1);
           }
           break;
       };
+      //Calcul du nombre de like/dislike
       newValues.likes = newValues.usersLiked.length;
       newValues.dislikes = newValues.usersDisliked.length;
+      //Mis à jour de la sauce
       Sauce.updateOne({
           _id: sauceId
         }, newValues)
