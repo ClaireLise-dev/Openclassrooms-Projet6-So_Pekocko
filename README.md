@@ -4,7 +4,7 @@
 
 1.	Installer la version 4 de node-sass
 
-2.	Cloner le frontend ici => https://github.com/OpenClassrooms-Student-Center/dwj-projet6
+2.	Cloner le frontend ici => https://github.com/OpenClassrooms-Student-Center/dwj-projet6  
 Le frontend du projet a été généré avec Angular CLI version 7.0.2.
 -	Dans un terminal accéder au frontend
 -	Installer: **npm install**
