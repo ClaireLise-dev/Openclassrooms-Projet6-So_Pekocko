@@ -12,7 +12,7 @@ Le frontend du projet a été généré avec Angular CLI version 7.0.2.
 
 3.	Cloner ce repository qui est le backend de l'application 
 
-4.	Ajouter un fichier **config.js**en suivant l'exemple du fichier **config_exemple.js**. Vous y entrerez l'adresse srv "secrète" de la base de données que je peux vous transmettre sur demande
+4.	Ajouter un fichier **config.js** en suivant l'exemple du fichier **config_exemple.js**. Vous y entrerez l'adresse srv "secrète" de la base de données que je peux vous transmettre sur demande
 
 -	Dans un autre terminal: Accéder au dossier backend
 -	Lancer: **node server**
